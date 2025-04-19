@@ -1,6 +1,5 @@
 import { LoadOrganizationCardSelector } from "@/components/LoadOrganizationCardSelector/LoadOrganizationCardSelector";
 import { LoadTimeSeriesChart } from "@/components/LoadTimeSeriesChart/LoadTimeSeriesChart";
-import { ORGANIZATIONS, PENS } from "@/constants";
 import { QueryStateDataParam } from "@/types";
 import { getQueryState } from "@/utils";
 
