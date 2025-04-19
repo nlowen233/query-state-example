@@ -25,8 +25,9 @@ export function QueryStateProvider({
 
   function dispatch(action: QueryStateAction) {
     try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const encodedStateString = urlParams.get(QueryStateDataParam.Data);
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      const encodedStateString = params.get(QueryStateDataParam.Data);
       const currentState = encodedStateString
         ? JSON.parse(atob(decodeURIComponent(encodedStateString)))
         : INIT;
@@ -36,11 +37,10 @@ export function QueryStateProvider({
       const base64Encoded = btoa(newStringifiedState);
       const urlEncoded = encodeURIComponent(base64Encoded);
 
+      params.set(QueryStateDataParam.Data, urlEncoded);
+
       startTransition(() => {
-        router.replace(
-          `${pathname}?${QueryStateDataParam.Data}=${urlEncoded}`,
-          { scroll: false }
-        );
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });
       });
     } catch (e) {
       console.error(`Error updating state: ${(e as Error).message}`);
